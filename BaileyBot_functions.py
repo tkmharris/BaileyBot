@@ -27,6 +27,9 @@ r = roll(number)
 print r
 print counting(r,count)
 
+# Next: Write function to determine possible bids.
+# Include method for determining lowest possible raises.
+
 # Ideas: Different play styles? Cautious bids the least chance of being caught out. 
 # Aggressive bids as close to 50% as possible.
 # Include bluffs?
