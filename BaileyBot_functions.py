@@ -4,6 +4,12 @@ import probabilities
 
 # This file keeps some of the basic functions for BaileyBot.
 
+# Palifico yes no
+def palifico(x):
+	if x == 'n':
+	    return False
+	else:
+	    return True
 
 # Rolls a die.
 def dice():
@@ -19,14 +25,18 @@ def roll(n):
 # Counts the number of aces or other numbers.
 # a is input set, b is number to be counted.
 def counting(h,number):
-	if number == 1:
-	    return h.count(1)
+	if number == 1 or palifico(is_it_palifico):
+	    return h.count(number)
 	else:
 	    return h.count(1) + h.count(number)
 
 # possible totals.
 def all_totals(m):
-	return [(x,y) for x in range(1, min(m+1,15)) for y in range(1,7)]
+	if palifico(is_it_palifico):
+	    return [(x,y) for x in range(1, min(m+1,11)) for y in range(1,7)]
+	else: 
+	    return [(x,1) for x in range(1, min(m+1,11))] + [(x,y) for x in range(1, min(m+1,16)) for y in range(2,7)]
+
 
 
 # allowable raises
@@ -49,25 +59,28 @@ def allowed(tup1, tup2):
 
 # Looks up probability on correct table depending on offer (need to add second table).
 def offer_prob(tup, n):
-	if tup[1] != 1:
-	    if tup[0] > 15:
-	        return 0	        
-	    elif tup[0] < 1:
-	        return 100
-	    else:
-		return probabilities.non_ace(tup[0],n)
-	else:	    
+	if tup[1] == 1 or palifico(is_it_palifico):
 	    if tup[0] > 10:
 	        return 0
 	    elif tup[0] < 1:
 	        return 100	        
 	    else:
 		return probabilities.ace(tup[0],n)
+	else:	    
+	    if tup[0] > 15:
+	        return 0	        
+	    elif tup[0] < 1:
+	        return 100
+	    else:
+		return probabilities.non_ace(tup[0],n)	    
+
 
 # IO - currently takes total numeber of dice, number of own dice and offer
 # and calculates probability of offer with own dice taken into account.
 per = int(raw_input('How many dice do you have?\n'))
 tot = int(raw_input('How many dice are there in total?\n'))
+is_it_palifico = raw_input('Is it Palifico? (y/n)')
+
 hand = roll(per)
 i = int(raw_input("What's the offer: how many dice?\n"))
 j = int(raw_input("What's the offer: which number on the dice?\n"))
@@ -77,6 +90,8 @@ tot_mod_own = tot - per
 
 all_bids = all_totals(tot)
 poss_bids = [tup for tup in all_bids if allowed(offer,tup)]
+
+
 
 print hand
 print 'Probability of offer is', offer_prob(offer_mod_own, tot_mod_own),"%."
