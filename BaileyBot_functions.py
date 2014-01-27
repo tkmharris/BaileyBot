@@ -94,7 +94,11 @@ poss_bids = [tup for tup in all_bids if allowed(offer,tup)]
 
 
 print hand
-print 'Probability of offer is', offer_prob(offer_mod_own, tot_mod_own),"%."
+
+if j > 6:
+	print "Dudo"
+else:
+	print 'Probability of offer is', offer_prob(offer_mod_own, tot_mod_own),"%."
 
 
 
