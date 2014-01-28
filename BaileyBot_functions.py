@@ -1,17 +1,18 @@
-#!/usr/bin/python
-
 import random
 import math
 import probabilities
+import operator
 
-# This file keeps some of the basic functions for BaileyBot.
-
+# palifico or not
+is_it_palifico = raw_input('Is it Palifico? (y/n)')
 # Palifico yes no
 def palifico(x):
 	if x == 'n':
 	    return False
 	else:
 	    return True
+
+# This file keeps some of the basic functions for BaileyBot.
 
 # Rolls a die.
 def dice():
@@ -31,6 +32,18 @@ def counting(h,number):
 	    return h.count(number)
 	else:
 	    return h.count(1) + h.count(number)
+
+# counts the number of each value we have (adjusted for ones)
+def my_totals(h):
+	return {number:counting(h,number) for number in range(1,7)}
+
+# returns the value we have the most of (adjusted for ones)
+def most(h):
+	return max((my_totals(h)).iteritems(), key=operator.itemgetter(1))[0]
+
+# returns the bid once own hand is taken into account
+def bid_mod_own(i,j, hand):
+	return (i - counting(hand,j), j)
 
 # possible totals.
 def all_totals(m):
@@ -59,8 +72,8 @@ def allowed(tup1, tup2):
 	else:
 	    return "Something's wrong!"
 
-# Looks up probability on correct table depending on offer (need to add second table).
-def offer_prob(tup, n):
+# Looks up probability on correct table depending on tuple (need to add second table).
+def tup_prob(tup, n):
 	if tup[1] == 1 or palifico(is_it_palifico):
 	    if tup[0] > 10:
 	        return 0
@@ -76,36 +89,9 @@ def offer_prob(tup, n):
 	    else:
 		return probabilities.non_ace(tup[0],n)	    
 
-
-# IO - currently takes total numeber of dice, number of own dice and offer
-# and calculates probability of offer with own dice taken into account.
-per = int(raw_input('How many dice do you have?\n'))
-tot = int(raw_input('How many dice are there in total?\n'))
-is_it_palifico = raw_input('Is it Palifico? (y/n)')
-
-hand = roll(per)
-i = int(raw_input("What's the offer: how many dice?\n"))
-j = int(raw_input("What's the offer: which number on the dice?\n"))
-offer = (i,j)
-offer_mod_own = (i - counting(hand,j), j)
-tot_mod_own = tot - per
-
-all_bids = all_totals(tot)
-poss_bids = [tup for tup in all_bids if allowed(offer,tup)]
+# looks up probability on correct table of tuple modified for own hand
+def tup_prob_mod(tup, n, h):
+	return tup_prob(bid_mod_own(tup[0],tup[1],h),n)
 
 
 
-print hand
-
-if j > 6:
-	print "Dudo"
-else:
-	print 'Probability of offer is', offer_prob(offer_mod_own, tot_mod_own),"%."
-
-
-
-# Include method for determining lowest possible raises.
-# Idea: Add lines from Alex's thesis/papers for BaileyBot to say at random.
-# Ideas: Different play styles? Cautious bids the offer with least chance of being caught out. 
-# Aggressive bids as close to 50% as possible.
-# Include bluffs?
