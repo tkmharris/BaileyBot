@@ -5,6 +5,8 @@ import probabilities
 import operator
 import BaileyBot_functions
 
+print random.randint(1,6)
+
 #initial setup, numbers of dice. BaileyBot rolls.
 per = int(raw_input('How many dice do you have?\n'))
 tot = int(raw_input('How many dice are there in total?\n'))
