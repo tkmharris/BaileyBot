@@ -57,7 +57,12 @@ def all_totals(m):
 # allowable raises
 # input (0,0) as bid to allow all bids, i.e. starting bid.
 def allowed(tup1, tup2):
-	if tup1[1]==1:
+	if palifico(is_it_palifico):
+	    if tup2[1]==tup1[1] and tup2[0] > tup1[0]:
+	        return True
+	    else:
+	        return False
+	elif tup1[1]==1:
 	    if (tup2[1]==1 and tup2[0] > tup1[0]) or (tup2[0] > 2*tup1[0]):
 	        return True
 	    else:

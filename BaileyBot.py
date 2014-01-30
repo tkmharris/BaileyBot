@@ -24,7 +24,6 @@ poss_start_bids = [(tup, BaileyBot_functions.tup_prob_mod(tup, tot_mod_own, hand
 another = 'y'
 
 if start == 'y':
-	print poss_start_bids
 	print choice(poss_start_bids)[0]
 
 reveal = raw_input('Should I reveal? (y/n)')
@@ -46,7 +45,6 @@ while another == 'y':
 	else:
 	    best_bid = max((dict(poss_bids)).iteritems(), key=operator.itemgetter(1))[0]
 	    viable_bids = [(k,v) for k, v in (dict(poss_bids)).iteritems() if v > (BaileyBot_functions.tup_prob_mod(best_bid, tot_mod_own, hand)-10)]
-	    print "Probabiliy of offer is",offer_prob
 	    print choice(viable_bids)[0]
 	    another = raw_input("Another_offer? (y/n)")
 
