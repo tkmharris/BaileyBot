@@ -1,6 +1,6 @@
 import random
 import math
-import probabilities
+import prob
 import operator
 
 # palifico or not
@@ -27,19 +27,19 @@ def roll(n):
 
 # Counts the number of aces or other numbers.
 # a is input set, b is number to be counted.
-def counting(h,number):
-	if number == 1 or palifico(is_it_palifico):
-	    return h.count(number)
+def counting(h,n):
+	if n == 1 or palifico(is_it_palifico):
+	    return h.count(n)
 	else:
-	    return h.count(1) + h.count(number)
+	    return h.count(1) + h.count(n)
 
 # counts the number of each value we have (adjusted for ones)
-def my_totals(h):
-	return {number:counting(h,number) for number in range(1,7)}
+def totals(h):
+	return {n:counting(h,n) for n in range(1,7)}
 
 # returns the value we have the most of (adjusted for ones)
 def most(h):
-	return max((my_totals(h)).iteritems(), key=operator.itemgetter(1))[0]
+	return max((totals(h)).iteritems(), key=operator.itemgetter(1))[0]
 
 # returns the bid once own hand is taken into account
 def bid_mod_own(i,j, hand):
@@ -85,14 +85,14 @@ def tup_prob(tup, n):
 	    elif tup[0] < 1:
 	        return 100	        
 	    else:
-		return probabilities.ace(tup[0],n)
+		return prob.ace(tup[0],n)
 	else:	    
 	    if tup[0] > 15:
 	        return 0	        
 	    elif tup[0] < 1:
 	        return 100
 	    else:
-		return probabilities.non_ace(tup[0],n)	    
+		return prob.non_ace(tup[0],n)	    
 
 # looks up probability on correct table of tuple modified for own hand
 def tup_prob_mod(tup, n, h):
