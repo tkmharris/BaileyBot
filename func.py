@@ -4,13 +4,11 @@ import prob
 import operator
 
 # palifico or not
-is_it_palifico = raw_input('Is it Palifico? (y/n)')
-# Palifico yes no
-def palifico(x):
-	if x == 'n':
-	    return False
-	else:
-	    return True
+t = raw_input('Is it Palifico? (y/n)')
+if t == 'n':
+	palifico = False
+else:
+	palifico = True
 
 # This file keeps some of the basic functions for BaileyBot.
 
@@ -28,7 +26,7 @@ def roll(n):
 # Counts the number of aces or other numbers.
 # a is input set, b is number to be counted.
 def counting(h,n):
-	if n == 1 or palifico(is_it_palifico):
+	if n == 1 or palifico:
 	    return h.count(n)
 	else:
 	    return h.count(1) + h.count(n)
@@ -47,7 +45,7 @@ def bid_mod_own(i,j, hand):
 
 # possible totals.
 def all_totals(m):
-	if palifico(is_it_palifico):
+	if palifico:
 	    return [(x,y) for x in range(1, min(m+1,11)) for y in range(1,7)]
 	else: 
 	    return [(x,1) for x in range(1, min(m+1,11))] + [(x,y) for x in range(1, min(m+1,16)) for y in range(2,7)]
@@ -57,7 +55,7 @@ def all_totals(m):
 # allowable raises
 # input (0,0) as bid to allow all bids, i.e. starting bid.
 def allowed(tup1, tup2):
-	if palifico(is_it_palifico):
+	if palifico:
 	    if tup2[1]==tup1[1] and tup2[0] > tup1[0]:
 	        return True
 	    else:
@@ -79,7 +77,7 @@ def allowed(tup1, tup2):
 
 # Looks up probability on correct table depending on tuple (need to add second table).
 def tup_prob(tup, n):
-	if tup[1] == 1 or palifico(is_it_palifico):
+	if tup[1] == 1 or palifico:
 	    if tup[0] > 10:
 	        return 0
 	    elif tup[0] < 1:
