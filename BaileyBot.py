@@ -137,7 +137,6 @@ if __name__=="__main__":
         # possible starting bids
         poss_start_bids = [(tup, tup_prob_mod(tup, tot_mod_own, hand)) for tup in all_bids \
                            if  tup_prob_mod(tup, tot_mod_own, hand) > 75 and tup[1] != 1]
-        another = True
 
         if start: print random.choice(poss_start_bids)[0]
 
